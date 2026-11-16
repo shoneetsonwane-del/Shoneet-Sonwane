@@ -1,0 +1,240 @@
+/* Colours and spacing scale. Neutrals plus one amber accent. */
+:root {
+  --bg: #15181D;
+  --surface: #1D2128;
+  --text: #ECE8E1;
+  --muted: #B9B4AB;
+  --line: #343A44;
+  --accent: #E8B04A;
+  --paper: #FFFFFF;
+  --ink: #111111;
+  --s1: 8px;
+  --s2: 24px;
+  --s3: 40px;
+  --gap: clamp(56px, 9vw, 112px);
+  --edge: 24px;
+}
+
+/* Base page: font, colours, smooth scrolling */
+* { box-sizing: border-box; }
+html { scroll-padding-top: 96px; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+p { max-width: 70ch; margin: 0 0 var(--s2); }
+ul { margin: 0; padding-left: 20px; max-width: 70ch; }
+li { margin-bottom: var(--s1); }
+.small { color: var(--muted); font-size: 0.95rem; }
+.plain { list-style: none; padding: 0; }
+
+/* Headings: large light serif, more space above than below */
+h1, h2, h3, h4 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: var(--s3) 0 var(--s1);
+}
+h1 { font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; margin-top: 0; }
+h2 { font-size: clamp(1.9rem, 4vw, 2.75rem); font-weight: 400; line-height: 1.1; margin-top: 0; }
+h2 .num { margin-right: 12px; color: var(--muted); font-family: "Inter", Arial, sans-serif; font-size: 0.9rem; }
+
+/* Links, with a visible keyboard focus */
+a { color: var(--accent); transition: color 0.2s; }
+a:hover { color: var(--text); }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.skip-link { position: absolute; left: var(--s2); top: -80px; z-index: 20; padding: var(--s1) 16px; background: var(--accent); color: var(--bg); font-weight: 600; }
+.skip-link:focus { top: var(--s1); color: var(--bg); }
+
+/* Navigation bar (flexbox), sticky and softly blurred */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(21, 24, 29, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s1) var(--s2);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: var(--s1) var(--edge);
+}
+.nav-brand { color: var(--text); font-family: "Source Serif 4", Georgia, serif; font-size: 1.15rem; text-decoration: none; }
+.nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s1); }
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--s1);
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-link:hover { color: var(--accent); }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: var(--s1);
+  right: var(--s1);
+  bottom: 6px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); }
+
+/* Buttons: the only filled amber on the page */
+.button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--s2);
+  border: 2px solid var(--accent);
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.button-primary { background: var(--accent); color: var(--bg); }
+.button-outline { background: transparent; color: var(--accent); }
+.button:hover { background: var(--text); border-color: var(--text); color: var(--bg); }
+.actions { display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* Page width and section spacing: a thin line above each section */
+main { max-width: 1180px; margin: 0 auto; padding: 0 var(--edge); }
+main > section, #resume-area { margin-top: var(--gap); padding-top: var(--s2); border-top: 1px solid var(--line); }
+
+/* First screen: name, sentence and facts beside the photo */
+#hero { margin-top: 0; padding-top: 72px; border-top: 0; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  grid-template-rows: auto auto auto 1fr;
+  grid-template-areas: "name photo" "lead photo" "facts photo" "actions photo";
+  column-gap: var(--s3);
+  align-items: start;
+}
+.hero-text { display: contents; }
+h1 { grid-area: name; }
+.lead { grid-area: lead; }
+.facts { grid-area: facts; }
+.actions { grid-area: actions; }
+.portrait-box { grid-area: photo; }
+.lead { font-size: 1.3rem; margin-bottom: var(--s2); }
+.facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s2);
+  margin: 0 0 var(--s2);
+  padding: var(--s2) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.facts dt { color: var(--muted); font-size: 0.95rem; }
+.facts dd { margin: 0; overflow-wrap: break-word; }
+.portrait-box { margin: 0; }
+.portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* Achievements and skills lists */
+#achievements li, #skills li { margin-bottom: 12px; }
+
+/* Cards: flat grid, thin full outline, lighter outline on hover */
+.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s2); margin-top: var(--s2); }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: var(--s2);
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--muted); }
+.card h3 { margin-top: 0; font-size: 1.35rem; }
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+
+/* Portfolio bars: show the real mix in pure CSS */
+.holdings { list-style: none; padding: 0; }
+.holdings li { margin-bottom: 16px; }
+.bar { display: block; height: 8px; margin-top: var(--s1); background: var(--line); border-radius: 4px; }
+.fill { display: block; height: 100%; background: var(--muted); border-radius: 4px; }
+.w34 { width: 34%; }
+.w24 { width: 24%; }
+.w17 { width: 17%; }
+.w15 { width: 15%; }
+.w10 { width: 10%; }
+
+/* Certificate: small and quiet inside the MUN card */
+.cert-link { display: inline-block; margin-bottom: var(--s1); }
+.cert { display: block; width: 220px; max-width: 100%; height: auto; border: 1px solid var(--line); border-radius: 4px; }
+
+/* Contact section */
+.contact-list { margin-bottom: var(--s2); }
+.contact-list a { display: inline-block; padding: 10px 0; }
+
+/* Paper resume: white sheet, black text */
+#resume-area { padding-bottom: 64px; }
+.download { margin-bottom: var(--s2); }
+#resume {
+  max-width: 794px;
+  padding: var(--s3);
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+#resume h3 { margin: 0 0 4px; font-size: 1.8rem; }
+#resume h4 { margin: var(--s2) 0 var(--s1); padding-bottom: 4px; border-bottom: 1px solid var(--ink); font-size: 1.05rem; }
+#resume p { max-width: none; margin: 0 0 var(--s1); }
+.entry { margin-bottom: 16px; }
+.entry-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px var(--s2); font-weight: 600; }
+
+/* Screens narrower than 700px: small photo beside the name, everything else stacks */
+@media (max-width: 699px) {
+  :root { --edge: 16px; }
+  html { scroll-padding-top: 200px; }
+  .lead { font-size: 1.15rem; }
+  .cards { grid-template-columns: 1fr; }
+  .hero-grid { grid-template-columns: 1fr 104px; grid-template-rows: auto; grid-template-areas: "name photo" "lead lead" "actions actions" "facts facts"; column-gap: 16px; }
+  .actions { margin-bottom: var(--s2); }
+  .nav-links { gap: 0; }
+  #hero { padding-top: var(--s3); }
+  #resume { padding: var(--s2) 16px; }
+}
+
+/* Print: only the resume, black on white, one A4 page */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  body { background: #fff; color: #000; font-size: 10pt; }
+  .skip-link, header, main > section, .download, #resume-area > h2 { display: none; }
+  main { max-width: none; padding: 0; }
+  #resume-area { margin: 0; padding: 0; border: 0; }
+  #resume { max-width: none; padding: 0; border: 0; color: #000; font-size: 10pt; line-height: 1.4; }
+  #resume h3 { font-size: 20pt; }
+  #resume h4 { border-bottom-color: #000; }
+}
+
+/* Reduced motion: turn off transitions and smooth scrolling */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  a, .button, .card, .nav-link::after { transition: none; }
+}
